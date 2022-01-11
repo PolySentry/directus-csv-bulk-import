@@ -1,1 +1,1 @@
-# Extension for Directus bulk import
+# (PoC) Extension for Directus bulk import
