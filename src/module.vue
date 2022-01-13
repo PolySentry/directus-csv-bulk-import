@@ -5,7 +5,8 @@
 				{{ col.collection }}
 			</v-list-item>
 		</v-list>
-		<v-button v-on:click="logToConsole">Log collections to console</v-button>
+		<v-button v-on:click="logToConsole">Import</v-button>
+		<input type="file" id="csv-file" name="csv-file">
 	</private-view>
 </template>
 
@@ -17,17 +18,19 @@ export default {
 		};
 	},
 	methods: {
-		logToConsole: function () {
-			console.log(this.collections);
+		inject: ['api'],
+		logToConsole: async function () {
+			const fileInput = document.querySelector('input[type="file"]');
+			const formData = new FormData();
+			formData.append('file', fileInput.files[0]);
+
+			const result = await this.api.post('/utils/import/Articles', formData);
+			console.log(result);
 		},
 	},
 	inject: ['api'],
 	mounted() {
-		// log the system field so you can see what attributes are available under it
-		// remove this line when you're done.
-		console.log(this.api);
-
-		// Get a list of all available collections to use with this module
+		// this.api is an authenticated axios instance
 		this.api.get('/collections?limit=-1').then((res) => {
 			this.collections = res.data.data;
 		});
