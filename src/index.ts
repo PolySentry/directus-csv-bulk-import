@@ -1,6 +1,7 @@
+import { defineModule } from '@directus/extensions-sdk';
 import ModuleComponent from './module.vue';
 
-export default {
+export default defineModule({
 	id: 'custom',
 	name: 'Custom',
 	icon: 'box',
@@ -10,4 +11,4 @@ export default {
 			component: ModuleComponent,
 		},
 	],
-};
+});

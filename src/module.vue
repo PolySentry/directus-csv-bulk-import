@@ -1,11 +1,6 @@
 <template>
 	<private-view title="Example Collection List">
-		<!-- <v-list>
-			<v-list-item v-for="col in collections" v-bind:key="col.collection">
-				{{ col.collection }}
-			</v-list-item>
-		</v-list> -->
-		
+		<v-upload />
 		<input type="file" id="csv-file" name="csv-file">
 		<select v-model="selected">
   			<option disabled value="">Please select one</option>
@@ -17,7 +12,9 @@
 </template>
 
 <script>
+import vUpload from './v-upload/v-upload.vue';
 export default {
+  components: { vUpload },
 	data() {
 		return {
 			collections: [],
