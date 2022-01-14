@@ -89,10 +89,10 @@
 
 <script lang="ts">
 import { useI18n } from 'vue-i18n';
-import { defineComponent, ref, computed } from 'vue';
+import { defineComponent, ref, computed, inject } from 'vue';
+
 
 export default defineComponent({
-	components: {  },
 	props: {
 		multiple: {
 			type: Boolean,
@@ -119,14 +119,16 @@ export default defineComponent({
 			default: undefined,
 		},
 	},
+	
 	emits: ['input'],
 	setup(props, { emit }) {
 		const { t } = useI18n();
-
 		const { uploading, progress, upload, onBrowseSelect, done, numberOfFiles } = useUpload();
 		const { onDragEnter, onDragLeave, onDrop, dragging } = useDragging();
 		const activeDialog = ref<'choose' | 'url' | null>(null);
-
+		const api = inject('api');
+		console.log(api)
+		
 		const filterByFolder = computed(() => {
 			if (!props.folder) return null;
 			return { folder: { id: { _eq: props.folder } } };
@@ -156,7 +158,29 @@ export default defineComponent({
 			return { uploading, progress, upload, onBrowseSelect, numberOfFiles, done };
 
 			async function upload(files: FileList) {
+				uploading.value = true;
+				progress.value = 0;
 				console.log(files);
+
+				try {
+					numberOfFiles.value = files.length;
+					const formData = new FormData();
+
+					formData.append('file', files[0]);
+					await this.api.post(`/utils/import/${this.selected}`, formData);
+					console.log("Finished");
+
+					progress.value = 100;
+					done.value = 1;
+					// uploadedFile && emit('input', uploadedFile);
+				} catch (err: any) {
+					//this should be replaced with error - directus is using by default unexpected error but I cannot import it here
+					console.error(err);
+				} finally {
+					uploading.value = false;
+					done.value = 0;
+					numberOfFiles.value = 0;
+				}
 			}
 
 			function onBrowseSelect(event: InputEvent) {
