@@ -127,7 +127,6 @@ export default defineComponent({
 		const { onDragEnter, onDragLeave, onDrop, dragging } = useDragging();
 		const activeDialog = ref<'choose' | 'url' | null>(null);
 		const api = inject('api');
-		console.log(api)
 		
 		const filterByFolder = computed(() => {
 			if (!props.folder) return null;
@@ -154,10 +153,12 @@ export default defineComponent({
 			const progress = ref(0);
 			const numberOfFiles = ref(0);
 			const done = ref(0);
+							
 
 			return { uploading, progress, upload, onBrowseSelect, numberOfFiles, done };
 
 			async function upload(files: FileList) {
+
 				uploading.value = true;
 				progress.value = 0;
 				console.log(files);
@@ -167,7 +168,7 @@ export default defineComponent({
 					const formData = new FormData();
 
 					formData.append('file', files[0]);
-					await this.api.post(`/utils/import/${this.selected}`, formData);
+					await api.post(`/utils/import/Articles`, formData);
 					console.log("Finished");
 
 					progress.value = 100;
