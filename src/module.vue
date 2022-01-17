@@ -42,7 +42,7 @@ export default {
 		this.api.get('/collections?limit=-1').then((res: { data: { data: any; }; }) => {
 			const collections = res.data.data;
 
-			this.collections = collections.map((collection: { collection: String; }) => ({
+			this.collections = collections.map((collection: { collection: string; }) => ({
 				text: parseCollectionName(collection.collection), 
 				value: collection.collection
 			}));
