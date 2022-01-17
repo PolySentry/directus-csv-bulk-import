@@ -37,15 +37,14 @@ export default {
 	inject: ['api'],
 	mounted() {
 		// this.api is an authenticated axios instance
-		this.api.get('/collections?limit=-1').then((res) => {
+		//@ts-ignore
+		this.api.get('/collections?limit=-1').then((res: { data: { data: any; }; }) => {
 			const collections = res.data.data;
-			console.log(collections);
-			
-			this.collections = collections.map((collection) => ({
+
+			this.collections = collections.map((collection: { collection: String; }) => ({
 				text: parseCollectionName(collection.collection), 
 				value: collection.collection
 			}));
-			console.log(this.collections);
 		});
 	},
 };

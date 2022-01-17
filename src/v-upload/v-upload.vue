@@ -125,7 +125,7 @@ export default defineComponent({
 	},
 	
 	emits: ['input'],
-	setup(props, { emit }) {
+	setup(props) {
 		const { t } = useI18n();
 		const { uploading, progress, upload, onBrowseSelect, done, numberOfFiles } = useUpload();
 		const { onDragEnter, onDragLeave, onDrop, dragging } = useDragging();
@@ -169,16 +169,17 @@ export default defineComponent({
 
 				try {
 					numberOfFiles.value = files.length;
+					if (!files[0]) throw Error("No file was found");
+					
 					const formData = new FormData();
-
-					formData.append('file', files[0]);
+					formData.append('file', files[0], 'filename');
+					//@ts-ignore
 					await api.post(`/utils/import/${props.collection}`, formData);
 					console.log("Finished");
 
 					progress.value = 100;
 					done.value = 1;
 				} catch (err: any) {
-					//this should be replaced with error - directus is using by default unexpected error but I cannot import it here
 					console.error(err);
 				} finally {
 					setTimeout(() => {
