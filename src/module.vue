@@ -1,7 +1,25 @@
 <template>
 	<private-view title="Bulk import">
-		<v-select v-model="selected" :items="collections" />
-		<v-upload :collection="selected"/>
+		<template #title-outer:prepend>
+			<v-button rounded disabled icon>
+				<v-icon name="publish" />
+			</v-button>
+		</template>
+
+		<template #title>
+			<h1 class="type-title">Bulk import</h1>
+			<v-chip v-if="modularExtension" disabled small>Modular Extension</v-chip>
+		</template>
+
+
+		<div class="docs-content">
+			<div style="margin-bottom: 1vh">
+				<span>Collection:</span>
+				<v-select v-model="selected" :items="collections" />
+			</div>
+			
+			<v-upload :collection="selected" v-show="selected"/>
+		</div>
  	</private-view>
 </template>
 
@@ -32,3 +50,15 @@ export default {
 	},
 };
 </script>
+
+<style lang="css" scoped>
+.docs-content {
+	padding: 0 var(--content-padding) var(--content-padding-bottom);
+}
+.v-chip {
+	--v-chip-background-color: var(--v-chip-background-color-hover);
+	--v-chip-color: var(--v-chip-color-hover);
+	margin-left: 12px;
+	cursor: default !important;
+}
+</style>

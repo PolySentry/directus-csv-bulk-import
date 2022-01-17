@@ -177,14 +177,15 @@ export default defineComponent({
 
 					progress.value = 100;
 					done.value = 1;
-					// uploadedFile && emit('input', uploadedFile);
 				} catch (err: any) {
 					//this should be replaced with error - directus is using by default unexpected error but I cannot import it here
 					console.error(err);
 				} finally {
-					uploading.value = false;
-					done.value = 0;
-					numberOfFiles.value = 0;
+					setTimeout(() => {
+						uploading.value = false;
+						done.value = 0;
+						numberOfFiles.value = 0;
+					}, 1000)	
 				}
 			}
 
