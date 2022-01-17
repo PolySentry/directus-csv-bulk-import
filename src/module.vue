@@ -26,6 +26,7 @@
 <script lang="ts">
 import { parseCollectionName } from './util';
 import vUpload from './v-upload/v-upload.vue';
+
 export default {
   components: { vUpload },
 	data() {
