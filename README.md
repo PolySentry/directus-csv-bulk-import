@@ -2,7 +2,8 @@
 Extension created for [Directus](https://github.com/directus/directus). It adds a new module which enables bulk import of elements to a collection from a CSV file using Directus API underneath.
 
 ## Preview
-![screen](https://github.com/PolySentry/bulk-import-extension/blob/feature/sc-4408/img/Screenshot%202022-01-17%20at%2014.04.58.png?raw=true)
+![image](https://user-images.githubusercontent.com/56135216/149823755-78385b62-57e5-47f8-93ac-1c1c25262426.png)
+
 
 ## Installation
 Module installation is described in the Directus [docs](https://docs.directus.io/extensions/creating-extensions/#deploying-your-extension).
