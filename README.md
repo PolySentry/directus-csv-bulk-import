@@ -8,4 +8,4 @@ Extension created for [Directus](https://github.com/directus/directus). It adds 
 Module installation is described in the Directus [docs](https://docs.directus.io/extensions/creating-extensions/#deploying-your-extension)
 
 - Download or build extension from the source code by `npm run build`
-- Move extension from ./dist folder into your project's extension folder, in this case: `./extensions/modules/bulk-import/ `
+- Move extension from ./dist directory into your project's extension folder, in this case: `./extensions/modules/bulk-import/ `
