@@ -1,5 +1,5 @@
 export const parseCollectionName = (name: String): String => {
-    return capitalizeFirstLetter(name).replaceAll('_', ' ')
+    return capitalize(name).replaceAll('_', ' ')
 }
 
 export const capitalize = (string: String): String => {
