@@ -12,8 +12,8 @@
 		</template>
 
 
-		<div class="docs-content">
-			<div style="margin-bottom: 1vh">
+		<div class="module-content">
+			<div class="collection-select">
 				<span>Collection:</span>
 				<v-select v-model="selected" :items="collections" />
 			</div>
@@ -52,7 +52,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.docs-content {
+.module-content {
 	padding: 0 var(--content-padding) var(--content-padding-bottom);
 }
 .v-chip {
@@ -60,5 +60,8 @@ export default {
 	--v-chip-color: var(--v-chip-color-hover);
 	margin-left: 12px;
 	cursor: default !important;
+}
+.collection-select {
+    margin-bottom: 1vh
 }
 </style>
