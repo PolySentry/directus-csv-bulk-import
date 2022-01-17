@@ -62,6 +62,6 @@ export default {
 	cursor: default !important;
 }
 .collection-select {
-    margin-bottom: 1vh
+    margin-bottom: 1vh;
 }
 </style>
