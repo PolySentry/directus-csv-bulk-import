@@ -118,6 +118,10 @@ export default defineComponent({
 			type: String,
 			default: undefined,
 		},
+		collection: {
+			type: String,
+			default: undefined,
+		}
 	},
 	
 	emits: ['input'],
@@ -168,7 +172,7 @@ export default defineComponent({
 					const formData = new FormData();
 
 					formData.append('file', files[0]);
-					await api.post(`/utils/import/Articles`, formData);
+					await api.post(`/utils/import/${props.collection}`, formData);
 					console.log("Finished");
 
 					progress.value = 100;
