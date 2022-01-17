@@ -1,36 +1,67 @@
 <template>
-	<private-view title="Example Collection List">
-		<v-list>
-			<v-list-item v-for="col in collections" v-bind:key="col.collection">
-				{{ col.collection }}
-			</v-list-item>
-		</v-list>
-		<v-button v-on:click="logToConsole">Log collections to console</v-button>
-	</private-view>
+	<private-view title="Bulk import">
+		<template #title-outer:prepend>
+			<v-button rounded disabled icon>
+				<v-icon name="publish" />
+			</v-button>
+		</template>
+
+		<template #title>
+			<h1 class="type-title">Bulk import</h1>
+			<v-chip v-if="modularExtension" disabled small>Modular Extension</v-chip>
+		</template>
+
+
+		<div class="module-content">
+			<div class="collection-select">
+				<span>Collection:</span>
+				<v-select v-model="selected" :items="collections" />
+			</div>
+			
+			<v-upload :collection="selected" v-show="selected"/>
+		</div>
+ 	</private-view>
 </template>
 
-<script>
+<script lang="ts">
+import { parseCollectionName } from './util';
+import vUpload from './v-upload/v-upload.vue';
+
 export default {
+  components: { vUpload },
 	data() {
 		return {
-			collections: null,
+			collections: [],
+			selected: '',
 		};
-	},
-	methods: {
-		logToConsole: function () {
-			console.log(this.collections);
-		},
 	},
 	inject: ['api'],
 	mounted() {
-		// log the system field so you can see what attributes are available under it
-		// remove this line when you're done.
-		console.log(this.api);
+		// this.api is an authenticated axios instance
+		//@ts-ignore
+		this.api.get('/collections?limit=-1').then((res: { data: { data: any; }; }) => {
+			const collections = res.data.data;
 
-		// Get a list of all available collections to use with this module
-		this.api.get('/collections?limit=-1').then((res) => {
-			this.collections = res.data.data;
+			this.collections = collections.map((collection: { collection: string; }) => ({
+				text: parseCollectionName(collection.collection), 
+				value: collection.collection
+			}));
 		});
 	},
 };
 </script>
+
+<style lang="css" scoped>
+.module-content {
+	padding: 0 var(--content-padding) var(--content-padding-bottom);
+}
+.v-chip {
+	--v-chip-background-color: var(--v-chip-background-color-hover);
+	--v-chip-color: var(--v-chip-color-hover);
+	margin-left: 12px;
+	cursor: default !important;
+}
+.collection-select {
+    margin-bottom: 1vh;
+}
+</style>

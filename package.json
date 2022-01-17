@@ -1,5 +1,5 @@
 {
-	"name": "directus-extension-bulk_import",
+	"name": "directus-extension-ts-module",
 	"version": "1.0.0",
 	"keywords": [
 		"directus",
@@ -9,7 +9,7 @@
 	"directus:extension": {
 		"type": "module",
 		"path": "dist/index.js",
-		"source": "src/index.js",
+		"source": "src/index.ts",
 		"host": "^9.4.3"
 	},
 	"scripts": {
@@ -17,6 +17,7 @@
 	},
 	"devDependencies": {
 		"@directus/extensions-sdk": "9.4.3",
+		"typescript": "^4.5.4",
 		"vue": "^3.2.26"
 	}
 }
