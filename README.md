@@ -1,4 +1,4 @@
-# Directus CSV import extension
+# Directus CSV bulk import extension
 Extension created for [Directus](https://github.com/directus/directus). It adds a new module which enables bulk import of elements to a collection from a CSV file using Directus API underneath.
 
 ## Preview
