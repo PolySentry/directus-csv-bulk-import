@@ -32,11 +32,7 @@ export default {
 		return {
 			collections: [],
 			selected: '',
-			error: '',
 		};
-	},
-	errorCaptured (_error, _vm, _info) {
-		console.log("asd");
 	},
 	inject: ['api'],
 	mounted() {
