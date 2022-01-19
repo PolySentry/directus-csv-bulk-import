@@ -11,7 +11,6 @@
 			<v-chip v-if="modularExtension" disabled small>Modular Extension</v-chip>
 		</template>
 
-
 		<div class="module-content">
 			<div class="collection-select">
 				<span>Collection:</span>
@@ -21,6 +20,17 @@
 			<v-upload :collection="selected" v-show="selected"/>
 		</div>
  	</private-view>
+	<v-dialog :model-value="error != ''">
+		<v-card>
+			<v-card-title>Something went wrong</v-card-title>
+			<v-card-text>
+				<v-error :error="error" />
+			</v-card-text>
+			<v-card-actions>
+				<v-button @click="error = null">Done</v-button>
+			</v-card-actions>
+		</v-card>
+	</v-dialog>
 </template>
 
 <script lang="ts">
@@ -33,7 +43,11 @@ export default {
 		return {
 			collections: [],
 			selected: '',
+			error: '',
 		};
+	},
+	errorCaptured (_error, _vm, _info) {
+		console.log("asd");
 	},
 	inject: ['api'],
 	mounted() {
