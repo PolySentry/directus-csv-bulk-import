@@ -200,7 +200,6 @@ export default defineComponent({
 						done.value = 0;
 						numberOfFiles.value = 0;
 					}, 1000)	
-					
 				}
 			}
 
