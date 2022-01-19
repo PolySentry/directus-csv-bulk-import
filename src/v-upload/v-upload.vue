@@ -1,5 +1,4 @@
 <template>
-	<div>{{error}}</div>
 	<div
 		data-dropzone
 		class="v-upload"
@@ -86,6 +85,17 @@
 			</template>
 		</template>
 	</div>
+	<v-dialog :model-value="!!error">
+		<v-card>
+			<v-card-title>Something went wrong</v-card-title>
+			<v-card-text>
+				<v-error :error="error" />
+			</v-card-text>
+			<v-card-actions>
+				<v-button @click="error = null">Done</v-button>
+			</v-card-actions>
+		</v-card>
+	</v-dialog>
 </template>
 
 <script lang="ts">
@@ -158,7 +168,7 @@ export default defineComponent({
 			const progress = ref(0);
 			const numberOfFiles = ref(0);
 			const done = ref(0);
-			const error = ref('');
+			const error = ref(null);
 							
 
 			return { uploading, progress, upload, onBrowseSelect, numberOfFiles, done, error };
@@ -182,8 +192,8 @@ export default defineComponent({
 					done.value = 1;
 					
 				} catch (e) {
-					console.log(e);
-					error.value = e.toString();
+					//@ts-ignore
+					error.value = e;
 				} finally {
 					setTimeout(() => {
 						uploading.value = false;
