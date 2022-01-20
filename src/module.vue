@@ -11,7 +11,6 @@
 			<v-chip v-if="modularExtension" disabled small>Modular Extension</v-chip>
 		</template>
 
-
 		<div class="module-content">
 			<div class="collection-select">
 				<span>Collection:</span>

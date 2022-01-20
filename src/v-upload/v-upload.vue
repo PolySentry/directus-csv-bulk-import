@@ -85,12 +85,22 @@
 			</template>
 		</template>
 	</div>
+	<v-dialog :model-value="!!error">
+		<v-card>
+			<v-card-title>Something went wrong</v-card-title>
+			<v-card-text>
+				<v-error :error="error" />
+			</v-card-text>
+			<v-card-actions>
+				<v-button @click="error = null">Done</v-button>
+			</v-card-actions>
+		</v-card>
+	</v-dialog>
 </template>
 
 <script lang="ts">
 import { useI18n } from 'vue-i18n';
 import { defineComponent, ref, computed, inject } from 'vue';
-
 
 export default defineComponent({
 	props: {
@@ -127,11 +137,11 @@ export default defineComponent({
 	emits: ['input'],
 	setup(props) {
 		const { t } = useI18n();
-		const { uploading, progress, upload, onBrowseSelect, done, numberOfFiles } = useUpload();
+		const { uploading, progress, upload, onBrowseSelect, done, numberOfFiles, error } = useUpload();
 		const { onDragEnter, onDragLeave, onDrop, dragging } = useDragging();
 		const activeDialog = ref<'choose' | 'url' | null>(null);
 		const api = inject('api');
-		
+
 		const filterByFolder = computed(() => {
 			if (!props.folder) return null;
 			return { folder: { id: { _eq: props.folder } } };
@@ -150,6 +160,7 @@ export default defineComponent({
 			numberOfFiles,
 			activeDialog,
 			filterByFolder,
+			error
 		};
 
 		function useUpload() {
@@ -157,9 +168,10 @@ export default defineComponent({
 			const progress = ref(0);
 			const numberOfFiles = ref(0);
 			const done = ref(0);
+			const error = ref<Error | null>(null);
 							
 
-			return { uploading, progress, upload, onBrowseSelect, numberOfFiles, done };
+			return { uploading, progress, upload, onBrowseSelect, numberOfFiles, done, error };
 
 			async function upload(files: FileList) {
 
@@ -170,7 +182,6 @@ export default defineComponent({
 				try {
 					numberOfFiles.value = files.length;
 					if (!files[0]) throw Error("No file was found");
-					
 					const formData = new FormData();
 					formData.append('file', files[0], 'filename');
 					//@ts-ignore
@@ -179,8 +190,9 @@ export default defineComponent({
 
 					progress.value = 100;
 					done.value = 1;
-				} catch (err: any) {
-					console.error(err);
+					
+				} catch (e) {
+					error.value = (e as Error); 
 				} finally {
 					setTimeout(() => {
 						uploading.value = false;
