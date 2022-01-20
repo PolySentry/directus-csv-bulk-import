@@ -168,7 +168,7 @@ export default defineComponent({
 			const progress = ref(0);
 			const numberOfFiles = ref(0);
 			const done = ref(0);
-			const error = ref(null);
+			const error = ref<Error | null>(null);
 							
 
 			return { uploading, progress, upload, onBrowseSelect, numberOfFiles, done, error };
@@ -192,8 +192,7 @@ export default defineComponent({
 					done.value = 1;
 					
 				} catch (e) {
-					//@ts-ignore
-					error.value = e;
+					error.value = (e as Error); 
 				} finally {
 					setTimeout(() => {
 						uploading.value = false;
