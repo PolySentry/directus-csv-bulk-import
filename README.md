@@ -10,3 +10,6 @@ Module installation is described in the Directus [docs](https://docs.directus.io
 
 - Download or build extension from the source code by `npm run build`
 - Move extension from ./dist directory into your project's extension folder, in this case: `./extensions/modules/bulk-import/ `
+
+## Wiki
+Please refer to our [GitHub Wiki](https://github.com/PolySentry/directus-csv-bulk-import/wiki) for more information.
