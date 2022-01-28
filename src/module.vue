@@ -25,12 +25,13 @@
 <script lang="ts">
 import { parseCollectionName } from './util';
 import vUpload from './v-upload/v-upload.vue';
+import { Collection } from './types';
 
 export default {
   components: { vUpload },
 	data() {
 		return {
-			collections: [],
+			collections: new Array<{text: string; value: string;}>(),
 			selected: '',
 		};
 	},
@@ -39,9 +40,10 @@ export default {
 		// this.api is an authenticated axios instance
 		//@ts-ignore
 		this.api.get('/collections?limit=-1').then((res: { data: { data: any; }; }) => {
-			const collections = res.data.data;
+			const collections: Collection[] = res.data.data
+				.filter((collection: Collection) => !collection.meta?.system);
 
-			this.collections = collections.map((collection: { collection: string; }) => ({
+			this.collections = collections.map((collection: Collection) => ({
 				text: parseCollectionName(collection.collection), 
 				value: collection.collection
 			}));
