@@ -177,7 +177,6 @@ export default defineComponent({
 
 				uploading.value = true;
 				progress.value = 0;
-				console.log(files);
 
 				try {
 					numberOfFiles.value = files.length;
@@ -186,7 +185,6 @@ export default defineComponent({
 					formData.append('file', files[0], 'filename');
 					//@ts-ignore
 					await api.post(`/utils/import/${props.collection}`, formData);
-					console.log("Finished");
 
 					progress.value = 100;
 					done.value = 1;

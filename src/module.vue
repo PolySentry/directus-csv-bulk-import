@@ -17,7 +17,7 @@
 				<v-select v-model="selected" :items="collections" />
 			</div>
 			
-			<v-upload :collection="selected" v-show="selected"/>
+			<v-upload :collection="selected" v-if="selected"/>
 		</div>
  	</private-view>
 </template>
