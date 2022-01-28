@@ -1,5 +1,5 @@
 <template>
-	<private-view title="Bulk import">
+	<private-view title="Bulk Import">
 		<template #title-outer:prepend>
 			<v-button rounded disabled icon>
 				<v-icon name="publish" />

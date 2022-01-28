@@ -3,7 +3,7 @@ import ModuleComponent from './module.vue';
 
 export default defineModule({
 	id: 'bulk-import',
-	name: 'Bulk import',
+	name: 'Bulk Import',
 	icon: 'publish',
 	routes: [
 		{
