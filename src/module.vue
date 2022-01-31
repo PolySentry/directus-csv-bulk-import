@@ -7,7 +7,7 @@
 		</template>
 
 		<template #title>
-			<h1 class="type-title">Bulk import</h1>
+			<h1 class="type-title">Bulk Import</h1>
 			<v-chip v-if="modularExtension" disabled small>Modular Extension</v-chip>
 		</template>
 
