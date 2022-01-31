@@ -1,8 +1,8 @@
 <template>
 	<private-view title="Bulk Import">
 		<template #title-outer:prepend>
-			<v-button rounded disabled icon>
-				<v-icon name="publish" />
+			<v-button class="header-icon" rounded disabled icon secondary>
+				<v-icon name="publish"/>
 			</v-button>
 		</template>
 
@@ -69,5 +69,8 @@ export default {
 }
 .collection-select {
     margin-bottom: 1vh;
+}
+.header-icon {
+	--v-button-color-disabled: var(--foreground-normal);
 }
 </style>
