@@ -1,4 +1,5 @@
-export const parseCollectionName = (name: string): string => {
+export const parseCollectionName = (name: string | undefined): string => {
+    if (name == undefined) return ""; 
     return capitalize(name).replaceAll('_', ' ')
 }
 

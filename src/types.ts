@@ -25,3 +25,9 @@ export interface Translation {
     language: string;
     translation: string; 
 }
+
+export interface DialogState {
+    message: string | Error;
+    isError: boolean;
+    header: string;
+}
