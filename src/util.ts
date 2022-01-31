@@ -1,6 +1,6 @@
 export const parseCollectionName = (name: string | undefined): string => {
     if (name == undefined) return ""; 
-    return capitalize(name).replaceAll('_', ' ')
+    return name ? capitalize(name).replaceAll('_', ' ') : "";
 }
 
 export const capitalize = (string: string): string => {
