@@ -85,14 +85,15 @@
 			</template>
 		</template>
 	</div>
-	<v-dialog :model-value="!!error">
+	<v-dialog :model-value="!!dialogState">
 		<v-card>
-			<v-card-title>Something went wrong</v-card-title>
+			<v-card-title>{{ dialogState.header }}</v-card-title>
 			<v-card-text>
-				<v-error :error="error" />
+				<div v-if="!dialogState.isError">{{ dialogState.message }}</div>
+				<v-error v-if="dialogState.isError" :error="dialogState.message" />
 			</v-card-text>
 			<v-card-actions>
-				<v-button @click="error = null">Done</v-button>
+				<v-button @click="dialogState = null">Done</v-button>
 			</v-card-actions>
 		</v-card>
 	</v-dialog>
@@ -101,6 +102,8 @@
 <script lang="ts">
 import { useI18n } from 'vue-i18n';
 import { defineComponent, ref, computed, inject } from 'vue';
+import { DialogState } from '../types';
+import { parseCollectionName } from '../util';
 
 export default defineComponent({
 	props: {
@@ -137,7 +140,7 @@ export default defineComponent({
 	emits: ['input'],
 	setup(props) {
 		const { t } = useI18n();
-		const { uploading, progress, upload, onBrowseSelect, done, numberOfFiles, error } = useUpload();
+		const { uploading, progress, upload, onBrowseSelect, done, numberOfFiles, dialogState } = useUpload();
 		const { onDragEnter, onDragLeave, onDrop, dragging } = useDragging();
 		const activeDialog = ref<'choose' | 'url' | null>(null);
 		const api = inject('api');
@@ -160,7 +163,7 @@ export default defineComponent({
 			numberOfFiles,
 			activeDialog,
 			filterByFolder,
-			error
+			dialogState
 		};
 
 		function useUpload() {
@@ -168,16 +171,15 @@ export default defineComponent({
 			const progress = ref(0);
 			const numberOfFiles = ref(0);
 			const done = ref(0);
-			const error = ref<Error | null>(null);
+			const dialogState = ref<DialogState | null>(null);
 							
 
-			return { uploading, progress, upload, onBrowseSelect, numberOfFiles, done, error };
+			return { uploading, progress, upload, onBrowseSelect, numberOfFiles, done, dialogState };
 
 			async function upload(files: FileList) {
 
 				uploading.value = true;
 				progress.value = 0;
-				console.log(files);
 
 				try {
 					numberOfFiles.value = files.length;
@@ -186,13 +188,22 @@ export default defineComponent({
 					formData.append('file', files[0], 'filename');
 					//@ts-ignore
 					await api.post(`/utils/import/${props.collection}`, formData);
-					console.log("Finished");
 
 					progress.value = 100;
 					done.value = 1;
+
+					dialogState.value = {
+						message: `Rows were successfully imported to the ${parseCollectionName(props.collection)} collection`,
+						isError: false,
+						header: "Success",
+					}; 
 					
 				} catch (e) {
-					error.value = (e as Error); 
+					dialogState.value = {
+						message: (e as Error),
+						isError: true,
+						header: "Something went wrong",
+					}; 
 				} finally {
 					setTimeout(() => {
 						uploading.value = false;

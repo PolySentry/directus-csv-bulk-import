@@ -1,5 +1,5 @@
-export const parseCollectionName = (name: string): string => {
-    return capitalize(name).replaceAll('_', ' ')
+export const parseCollectionName = (name: string | undefined): string => {
+    return name ? capitalize(name).replaceAll('_', ' ') : "";
 }
 
 export const capitalize = (string: string): string => {
