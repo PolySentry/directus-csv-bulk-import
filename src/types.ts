@@ -1,6 +1,6 @@
 export interface Collection {
-	collection: string;
-	meta: Meta;
+    collection: string;
+    meta: Meta;
 }
 
 export interface Meta {
