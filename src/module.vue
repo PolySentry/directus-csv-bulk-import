@@ -43,11 +43,11 @@ export default {
 			const collections: Collection[] = res.data.data
 				.filter((collection: Collection) => !collection.meta?.system)
 				.sort((cA: Collection, cB: Collection) => {
-					if (cA.collection < cB.collection) return -1;
-					if (cA.collection > cB.collection) return 1;
+					if (cA.collection.toLowerCase() < cB.collection.toLowerCase()) return -1;
+					if (cA.collection.toLowerCase() > cB.collection.toLowerCase()) return 1;
 					return 0;
 				});
-
+			
 			this.collections = collections.map((collection: Collection) => ({
 				text: parseCollectionName(collection.collection), 
 				value: collection.collection
